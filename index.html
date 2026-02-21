@@ -4,94 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GarimpaPreço - Compare e Economize</title>
-    <meta name="description" content="Compare preços entre Mercado Livre, Shopee, Amazon e mais. Receba alertas quando o preço cair!">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root{--primary:#1e3a5f;--accent:#f5a623;--bg:#f8fafc;--white:#fff;--text:#1e293b;--success:#22c55e;--danger:#ef4444}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-        header{background:var(--white);box-shadow:0 2px 20px rgba(0,0,0,.08);position:sticky;top:0;z-index:1000}
-        .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-        .header-content{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
-        .logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
-        .logo img{width:60px;height:60px;border-radius:16px;box-shadow:0 4px 15px rgba(245,166,35,.4);border:3px solid white}
-        .logo h1{font-size:1.7rem;font-weight:800;color:var(--primary)}
-        .logo span{font-size:.8rem;color:var(--accent);font-weight:700;text-transform:uppercase}
-        .nav{display:flex;gap:2rem;list-style:none}
-        .nav a{text-decoration:none;color:var(--text);font-weight:600;transition:color .3s}
-        .nav a:hover{color:var(--accent)}
-        .hero{background:linear-gradient(135deg,var(--primary) 0%,#0f2744 100%);padding:5rem 0;text-align:center;color:white}
-        .hero h2{font-size:3rem;font-weight:800;margin-bottom:1rem}
-        .hero p{font-size:1.25rem;opacity:.9;margin-bottom:2.5rem;max-width:600px;margin-left:auto;margin-right:auto}
-        .search-box{background:var(--white);border-radius:20px;padding:.75rem;display:flex;max-width:750px;margin:0 auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.4)}
-        .search-box input{flex:1;border:none;padding:1.25rem;font-size:1.1rem;outline:none;border-radius:12px}
-        .search-box button{background:var(--accent);color:white;border:none;padding:1.25rem 2.5rem;border-radius:14px;font-weight:700;cursor:pointer;transition:transform .3s}
-        .search-box button:hover{transform:translateY(-2px)}
-        .stats{display:flex;justify-content:center;gap:4rem;margin-top:3rem}
-        .stat-value{font-size:2rem;font-weight:800;color:var(--accent)}
-        .categories{padding:3rem 0;text-align:center;background:var(--white)}
-        .chips{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
-        .chip{background:var(--bg);border:2px solid transparent;padding:.875rem 1.75rem;border-radius:50px;cursor:pointer;font-weight:600;transition:all .3s}
-        .chip:hover,.chip.active{border-color:var(--accent);background:rgba(245,166,35,.1);color:var(--accent)}
-        .deals{padding:4rem 0}
-        .section-title{font-size:2rem;font-weight:800;display:flex;align-items:center;gap:.75rem;margin-bottom:2rem}
-        .section-title i{color:var(--danger);animation:pulse 2s infinite}
-        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-        .products{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem}
-        .product{background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,.03);border:1px solid #e2e8f0;transition:all .4s;position:relative}
-        .product:hover{transform:translateY(-8px);box-shadow:0 25px 50px -12px rgba(0,0,0,.15);border-color:var(--accent)}
-        .product-badge{position:absolute;top:1rem;left:1rem;background:var(--danger);color:white;padding:.5rem 1rem;border-radius:10px;font-weight:800;font-size:.875rem;z-index:10}
-        .product-img{height:220px;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);display:flex;align-items:center;justify-content:center;position:relative}
-        .product-img img{max-width:75%;max-height:75%;object-fit:contain}
-        .alert-btn{position:absolute;top:1rem;right:1rem;background:var(--white);border:none;width:45px;height:45px;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:all .3s}
-        .alert-btn:hover{background:var(--accent);color:white;transform:scale(1.1)}
-        .product-info{padding:1.75rem}
-        .product-title{font-weight:700;margin-bottom:.75rem;font-size:1.1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--primary)}
-        .price-history{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;font-size:.875rem;background:rgba(34,197,94,.1);padding:.5rem .75rem;border-radius:8px;width:fit-content}
-        .price-history .lowest{color:var(--success);font-weight:700}
-        .prices{display:flex;align-items:baseline;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
-        .current-price{font-size:1.75rem;font-weight:800;color:var(--primary)}
-        .old-price{text-decoration:line-through;color:#64748b}
-        .economy{background:var(--success);color:white;padding:.25rem .75rem;border-radius:20px;font-size:.875rem;font-weight:700}
-        .stores{display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap}
-        .store-tag{background:var(--bg);padding:.375rem .875rem;border-radius:20px;font-size:.8rem;font-weight:600;color:#64748b;border:1px solid #e2e8f0}
-        .store-tag.destaque{background:rgba(245,166,35,.1);color:var(--accent);border-color:var(--accent)}
-        .buy-btn{width:100%;background:var(--accent);color:white;border:none;padding:1rem;border-radius:12px;font-weight:700;cursor:pointer;transition:all .3s;margin-bottom:.5rem}
-        .buy-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(245,166,35,.4)}
-        .buy-btn.secondary{background:var(--white);color:var(--primary);border:2px solid #e2e8f0}
-        .buy-btn.secondary:hover{border-color:var(--primary);background:var(--bg)}
-        .affiliate-banner{background:linear-gradient(135deg,rgba(245,166,35,.1) 0%,rgba(78,205,196,.1) 100%);border:2px dashed var(--accent);border-radius:16px;padding:1.5rem;text-align:center;margin:2rem 0}
-        .affiliate-banner strong{color:var(--accent)}
-        .features{background:linear-gradient(135deg,var(--primary) 0%,#0f2744 100%);padding:5rem 0;color:white}
-        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem;text-align:center}
-        .feature{padding:2rem;background:rgba(255,255,255,.05);border-radius:24px;border:1px solid rgba(255,255,255,.1)}
-        .feature-icon{width:90px;height:90px;background:linear-gradient(135deg,rgba(245,166,35,.2) 0%,rgba(78,205,196,.2) 100%);border-radius:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2.5rem;color:var(--accent)}
-        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-        .modal.active{display:flex}
-        .modal-content{background:var(--white);border-radius:24px;padding:2.5rem;max-width:480px;width:90%;animation:slideUp .4s;position:relative}
-        @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-        .modal-header{text-align:center;margin-bottom:2rem}
-        .modal-header .icon-wrapper{width:80px;height:80px;background:linear-gradient(135deg,rgba(245,166,35,.1) 0%,rgba(78,205,196,.1) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2.5rem;color:var(--accent)}
-        .form-group{margin-bottom:1.25rem}
-        .form-group label{display:block;margin-bottom:.5rem;font-weight:600;font-size:.875rem;color:var(--primary)}
-        .form-group input{width:100%;padding:1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;outline:none}
-        .form-group input:focus{border-color:var(--accent)}
-        .submit-btn{width:100%;background:var(--accent);color:white;border:none;padding:1.25rem;border-radius:12px;font-weight:700;font-size:1.1rem;cursor:pointer}
-        .submit-btn:disabled{opacity:.6;cursor:not-allowed}
-        .close-modal{position:absolute;top:1.5rem;right:1.5rem;background:#f1f5f9;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.5rem;color:#64748b}
-        .toast{position:fixed;bottom:2rem;right:2rem;background:var(--primary);color:white;padding:1.25rem 1.75rem;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,.3);display:none;align-items:center;gap:1rem;z-index:3000;border-left:4px solid var(--accent)}
-        .toast.show{display:flex}
-        footer{background:#0f172a;color:white;padding:4rem 0 2rem}
-        .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:3rem;margin-bottom:3rem}
-        .footer-brand{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
-        .footer-brand img{width:55px;height:55px;border-radius:14px;border:3px solid rgba(255,255,255,.2)}
-        .footer-links h4{font-size:1.1rem;margin-bottom:1.5rem;color:var(--accent)}
-        .footer-links ul{list-style:none}
-        .footer-links li{margin-bottom:.75rem}
-        .footer-links a{color:rgba(255,255,255,.7);text-decoration:none;transition:all .3s;display:flex;align-items:center;gap:.5rem}
-        .footer-links a:hover{color:var(--accent);transform:translateX(5px)}
-        .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.875rem}
+        :root {
+            --primary: #1e3a5f;
+            --accent: #f5a623;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text: #1e293b;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        header { background: var(--white); box-shadow: 0 2px 20px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .header-content { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo img { width: 60px; height: 60px; border-radius: 16px; box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4); border: 3px solid white; }
+        .logo h1 { font-size: 1.7rem; font-weight: 800; color: var(--primary); }
+        .logo span { font-size: 0.8rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+        .nav { display: flex; gap: 2rem; list-style: none; }
+        .nav a { text-decoration: none; color: var(--text); font-weight: 600; transition: color 0.3s; }
+        .nav a:hover { color: var(--accent); }
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, #0f2744 100%); padding: 5rem 0; text-align: center; color: white; }
+        .hero h2 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero p { font-size: 1.25rem; opacity: 0.9; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .search-box { background: var(--white); border-radius: 20px; padding: 0.75rem; display: flex; max-width: 750px; margin: 0 auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); }
+        .search-box input { flex: 1; border: none; padding: 1.25rem; font-size: 1.1rem; outline: none; border-radius: 12px; }
+        .search-box button { background: var(--accent); color: white; border: none; padding: 1.25rem 2.5rem; border-radius: 14px; font-weight: 700; cursor: pointer; }
+        .stats { display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent); }
+        .categories { padding: 3rem 0; text-align: center; background: var(--white); }
+        .chips { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+        .chip { background: var(--bg); border: 2px solid transparent; padding: 0.875rem 1.75rem; border-radius: 50px; cursor: pointer; font-weight: 600; }
+        .chip:hover, .chip.active { border-color: var(--accent); background: rgba(245, 166, 35, 0.1); color: var(--accent); }
+        .deals { padding: 4rem 0; }
+        .section-title { font-size: 2rem; font-weight: 800; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+        .section-title i { color: var(--danger); }
+        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .product { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; position: relative; }
+        .product:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .product-badge { position: absolute; top: 1rem; left: 1rem; background: var(--danger); color: white; padding: 0.5rem 1rem; border-radius: 10px; font-weight: 800; font-size: 0.875rem; }
+        .product-img { height: 220px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+        .product-img img { max-width: 75%; max-height: 75%; object-fit: contain; }
+        .alert-btn { position: absolute; top: 1rem; right: 1rem; background: var(--white); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .alert-btn:hover { background: var(--accent); color: white; }
+        .product-info { padding: 1.75rem; }
+        .product-title { font-weight: 700; margin-bottom: 0.75rem; font-size: 1.1rem; color: var(--primary); }
+        .price-history { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.875rem; background: rgba(34, 197, 94, 0.1); padding: 0.5rem 0.75rem; border-radius: 8px; width: fit-content; }
+        .lowest { color: var(--success); font-weight: 700; }
+        .prices { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .current-price { font-size: 1.75rem; font-weight: 800; color: var(--primary); }
+        .old-price { text-decoration: line-through; color: #64748b; }
+        .economy { background: var(--success); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 700; }
+        .stores { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+        .store-tag { background: var(--bg); padding: 0.375rem 0.875rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #64748b; border: 1px solid #e2e8f0; }
+        .store-tag.destaque { background: rgba(245, 166, 35, 0.1); color: var(--accent); border-color: var(--accent); }
+        .buy-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 0.5rem; }
+        .buy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245, 166, 35, 0.4); }
+        .buy-btn.secondary { background: var(--white); color: var(--primary); border: 2px solid #e2e8f0; }
+        .affiliate-banner { background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%); border: 2px dashed var(--accent); border-radius: 16px; padding: 1.5rem; text-align: center; margin: 2rem 0; }
+        .features { background: linear-gradient(135deg, var(--primary) 0%, #0f2744 100%); padding: 5rem 0; color: white; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; text-align: center; }
+        .feature { padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
+        .feature-icon { width: 90px; height: 90px; background: linear-gradient(135deg, rgba(245, 166, 35, 0.2) 0%, rgba(78, 205, 196, 0.2) 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; color: var(--accent); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--white); border-radius: 24px; padding: 2.5rem; max-width: 480px; width: 90%; position: relative; }
+        .modal-header { text-align: center; margin-bottom: 2rem; }
+        .modal-header .icon-wrapper { width: 80px; height: 80px; background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.5rem; color: var(--accent); }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem; color: var(--primary); }
+        .form-group input { width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; outline: none; }
+        .form-group input:focus { border-color: var(--accent); }
+        .submit-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 1.25rem; border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer; }
+        .submit-btn:disabled { opacity: 0.6; }
+        .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; color: #64748b; }
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--primary); color: white; padding: 1.25rem 1.75rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: none; align-items: center; gap: 1rem; z-index: 3000; border-left: 4px solid var(--accent); }
+        .toast.show { display: flex; }
+        footer { background: #0f172a; color: white; padding: 4rem 0 2rem; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .footer-brand img { width: 55px; height: 55px; border-radius: 14px; border: 3px solid rgba(255,255,255,0.2); }
+        .footer-links h4 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--accent); }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; }
+        .footer-links a:hover { color: var(--accent); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.875rem; }
         @media(max-width:768px){.hero h2{font-size:2rem}.search-box{flex-direction:column}.stats{gap:2rem;flex-wrap:wrap}.products{grid-template-columns:1fr}}
     </style>
 </head>
@@ -103,7 +105,7 @@
                     <img src="https://i.imgur.com/vrrMLs7.png" alt="GarimpaPreço">
                     <div>
                         <h1>GarimpaPreço</h1>
-                        <span>Compare & Economize</span>
+                        <span>COMPARE & ECONOMIZE</span>
                     </div>
                 </a>
                 <ul class="nav">
@@ -121,12 +123,23 @@
             <p>Compare preços entre Mercado Livre, Shopee, Amazon e outras grandes lojas. Economize até 40%!</p>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="O que você está procurando? (Ex: iPhone 15, Notebook...)">
-                <button onclick="searchProducts()"><i class="fas fa-search"></i> Buscar</button>
+                <button onclick="searchProducts()">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
             </div>
             <div class="stats">
-                <div><div class="stat-value">50+</div><div>Lojas parceiras</div></div>
-                <div><div class="stat-value">1M+</div><div>Produtos</div></div>
-                <div><div class="stat-value">30%</div><div>Economia média</div></div>
+                <div>
+                    <div class="stat-value">50+</div>
+                    <div>Lojas parceiras</div>
+                </div>
+                <div>
+                    <div class="stat-value">1M+</div>
+                    <div>Produtos</div>
+                </div>
+                <div>
+                    <div class="stat-value">30%</div>
+                    <div>Economia média</div>
+                </div>
             </div>
         </div>
     </section>
@@ -135,23 +148,27 @@
         <div class="container">
             <h3>Navegue por Categoria</h3>
             <div class="chips">
-                <button class="chip active" onclick="filterCategory(this,'todos')">Todos</button>
-                <button class="chip" onclick="filterCategory(this,'celulares')">Celulares</button>
-                <button class="chip" onclick="filterCategory(this,'notebooks')">Notebooks</button>
-                <button class="chip" onclick="filterCategory(this,'tvs')">TVs</button>
-                <button class="chip" onclick="filterCategory(this,'eletro')">Eletro</button>
-                <button class="chip" onclick="filterCategory(this,'games')">Games</button>
+                <button class="chip active" onclick="filterCategory(this, 'todos')">Todos</button>
+                <button class="chip" onclick="filterCategory(this, 'celulares')">Celulares</button>
+                <button class="chip" onclick="filterCategory(this, 'notebooks')">Notebooks</button>
+                <button class="chip" onclick="filterCategory(this, 'tvs')">TVs</button>
+                <button class="chip" onclick="filterCategory(this, 'eletro')">Eletro</button>
+                <button class="chip" onclick="filterCategory(this, 'games')">Games</button>
             </div>
         </div>
     </section>
 
     <section class="deals" id="ofertas">
         <div class="container">
-            <h2 class="section-title"><i class="fas fa-fire"></i> Ofertas Imperdíveis</h2>
+            <h2 class="section-title">
+                <i class="fas fa-fire"></i> Ofertas Imperdíveis
+            </h2>
             <div class="affiliate-banner">
-                <p><i class="fas fa-heart"></i> <strong>Você ajuda o GarimpaPreço a ficar no ar comprando conosco!</strong> </p>
+                <p><i class="fas fa-heart"></i> <strong>Você ajuda o GarimpaPreço a ficar no ar comprando conosco!</strong> Quando você compra pelos nossos links das lojas parceiras, recebemos uma pequena comissão. O preço final para você não altera!</p>
             </div>
-            <div class="products" id="productsGrid"></div>
+            <div class="products" id="productsGrid">
+                <!-- Produtos serão carregados aqui -->
+            </div>
         </div>
     </section>
 
@@ -198,7 +215,9 @@
                     <label>Preço desejado (R$)</label>
                     <input type="number" id="targetPrice" step="0.01" required>
                 </div>
-                <button type="submit" class="submit-btn" id="submitAlert"><i class="fas fa-bell"></i> Criar Alerta</button>
+                <button type="submit" class="submit-btn" id="submitAlert">
+                    <i class="fas fa-bell"></i> Criar Alerta
+                </button>
             </form>
         </div>
     </div>
@@ -207,7 +226,7 @@
         <i class="fas fa-check-circle"></i>
         <div>
             <strong id="toastTitle">Sucesso!</strong>
-            <p id="toastMessage" style="margin:0;font-size:.9rem"></p>
+            <p id="toastMessage" style="margin:0;font-size:0.9rem"></p>
         </div>
     </div>
 
@@ -249,124 +268,300 @@
 
     <script>
         // CONFIGURAÇÕES
-        const AFFILIATE_IDS={mercadoLivre:'16577103',shopee:'an_18390800248'};
-        const SUPABASE_URL='https://hjziqhlmknowbnbvgybs.supabase.co';
-        const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqemlxaGxta25vd2JuYnZneWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MTQ3NzEsImV4cCI6MjA4NzE5MDc3MX0.RbzgWcyDh1mguf6LdgYsIqYymLrpvdr5dxMbH5zHC4Q';
+        const AFFILIATE_IDS = {
+            mercadoLivre: '16577103',
+            shopee: 'an_18390800248'
+        };
+
+        const SUPABASE_URL = 'https://hjziqhlmknowbnbvgybs.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqemlxaGxta25vd2JuYnZneWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MTQ3NzEsImV4cCI6MjA4NzE5MDc3MX0.RbzgWcyDh1mguf6LdgYsIqYymLrpvdr5dxMbH5zHC4Q';
 
         // PRODUTOS
-        const products=[
-            {id:1,name:"Samsung Galaxy S24 Ultra 256GB",image:"https://images.unsplash.com/photo-1610945265078-3858a0828671?w=400&h=300&fit=crop",currentPrice:5299,oldPrice:6999,discount:24,lowestPrice:4899,stores:["Mercado Livre","Shopee"],category:"celulares",searchTerm:"galaxy s24 ultra"},
-            {id:2,name:"Notebook Dell Inspiron i5 16GB",image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",currentPrice:3299,oldPrice:4299,discount:23,lowestPrice:3199,stores:["Magazine Luiza","Casas Bahia"],category:"notebooks",searchTerm:"notebook dell i5"},
-            {id:3,name:"Smart TV LG 55" 4K NanoCell",image:"https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop",currentPrice:2499,oldPrice:3499,discount:29,lowestPrice:2399,stores:["Mercado Livre","Shopee"],category:"tvs",searchTerm:"tv lg 55 4k"},
-            {id:4,name:"Air Fryer Electrolux 4L Digital",image:"https://images.unsplash.com/photo-1626147116986-4601771470a6?w=400&h=300&fit=crop",currentPrice:399,oldPrice:699,discount:43,lowestPrice:379,stores:["Shopee","Amazon"],category:"eletro",searchTerm:"air fryer electrolux"},
-            {id:5,name:"PlayStation 5 Slim + 2 Jogos",image:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop",currentPrice:3899,oldPrice:4599,discount:15,lowestPrice:3799,stores:["Mercado Livre","Magazine"],category:"games",searchTerm:"playstation 5 slim"},
-            {id:6,name:"Tênis Nike Air Force 1",image:"https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=300&fit=crop",currentPrice:599,oldPrice:899,discount:33,lowestPrice:549,stores:["Shopee","Mercado Livre"],category:"moda",searchTerm:"tenis nike air force"}
+        const products = [
+            {
+                id: 1,
+                name: "Samsung Galaxy S24 Ultra 256GB",
+                image: "https://images.unsplash.com/photo-1610945265078-3858a0828671?w=400&h=300&fit=crop",
+                currentPrice: 5299.00,
+                oldPrice: 6999.00,
+                discount: 24,
+                lowestPrice: 4899.00,
+                stores: ["Mercado Livre", "Shopee"],
+                category: "celulares",
+                searchTerm: "galaxy s24 ultra"
+            },
+            {
+                id: 2,
+                name: "Notebook Dell Inspiron i5 16GB",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",
+                currentPrice: 3299.00,
+                oldPrice: 4299.00,
+                discount: 23,
+                lowestPrice: 3199.00,
+                stores: ["Magazine Luiza", "Casas Bahia"],
+                category: "notebooks",
+                searchTerm: "notebook dell i5"
+            },
+            {
+                id: 3,
+                name: "Smart TV LG 55 4K NanoCell",
+                image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop",
+                currentPrice: 2499.00,
+                oldPrice: 3499.00,
+                discount: 29,
+                lowestPrice: 2399.00,
+                stores: ["Mercado Livre", "Shopee"],
+                category: "tvs",
+                searchTerm: "tv lg 55 4k"
+            },
+            {
+                id: 4,
+                name: "Air Fryer Electrolux 4L Digital",
+                image: "https://images.unsplash.com/photo-1626147116986-4601771470a6?w=400&h=300&fit=crop",
+                currentPrice: 399.00,
+                oldPrice: 699.00,
+                discount: 43,
+                lowestPrice: 379.00,
+                stores: ["Shopee", "Amazon"],
+                category: "eletro",
+                searchTerm: "air fryer electrolux"
+            },
+            {
+                id: 5,
+                name: "PlayStation 5 Slim + 2 Jogos",
+                image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=300&fit=crop",
+                currentPrice: 3899.00,
+                oldPrice: 4599.00,
+                discount: 15,
+                lowestPrice: 3799.00,
+                stores: ["Mercado Livre", "Magazine"],
+                category: "games",
+                searchTerm: "playstation 5 slim"
+            },
+            {
+                id: 6,
+                name: "Tenis Nike Air Force 1",
+                image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=300&fit=crop",
+                currentPrice: 599.00,
+                oldPrice: 899.00,
+                discount: 33,
+                lowestPrice: 549.00,
+                stores: ["Shopee", "Mercado Livre"],
+                category: "moda",
+                searchTerm: "tenis nike air force"
+            }
         ];
 
-        // FUNÇÕES
-        function formatPrice(p){return p.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
-
-        function renderProducts(list=products){
-            const grid=document.getElementById('productsGrid');
-            if(!list.length){grid.innerHTML='<div style="text-align:center;padding:3rem">Nenhum produto encontrado</div>';return}
-            grid.innerHTML=list.map(p=>{
-                const eco=p.oldPrice-p.currentPrice;
-                return`<div class="product">
-                    <div class="product-badge">-${p.discount}%</div>
-                    <div class="product-img">
-                        <img src="${p.image}" alt="${p.name}">
-                        <button class="alert-btn" onclick="openAlertModal('${p.name.replace(/'/g,"\'")}',${p.currentPrice})"><i class="far fa-bell"></i></button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">${p.name}</h3>
-                        <div class="price-history"><i class="fas fa-arrow-trend-down"></i> Menor preço: <span class="lowest">R$ ${formatPrice(p.lowestPrice)}</span></div>
-                        <div class="prices">
-                            <span class="current-price">R$ ${formatPrice(p.currentPrice)}</span>
-                            <span class="old-price">R$ ${formatPrice(p.oldPrice)}</span>
-                            <span class="economy">Economize R$ ${formatPrice(eco)}</span>
-                        </div>
-                        <div class="stores">${p.stores.map((s,i)=>`<span class="store-tag ${i===0?'destaque':''}">${s}</span>`).join('')}</div>
-                        <button class="buy-btn" onclick="buyNow('${p.searchTerm}','mercadoLivre')"><i class="fas fa-shopping-bag"></i> Ver no Mercado Livre</button>
-                        <button class="buy-btn secondary" onclick="buyNow('${p.searchTerm}','shopee')"><i class="fas fa-store"></i> Ver na Shopee</button>
-                    </div>
-                </div>`
-            }).join('')
+        // FUNÇÃO: Formatar preço
+        function formatPrice(price) {
+            return price.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
         }
 
-        function buyNow(term,store){
-            const encoded=encodeURIComponent(term);
-            let url=store==='mercadoLivre'?`https://lista.mercadolivre.com.br/${encoded}#D[A:${encoded}]?matt_tool=${AFFILIATE_IDS.mercadoLivre}&matt_word=garimpapreco`:`https://shopee.com.br/search?keyword=${encoded}&utm_source=${AFFILIATE_IDS.shopee}&utm_medium=affiliates&utm_campaign=garimpapreco`;
-            window.open(url,'_blank');
-            showToast('Redirecionando...',`Buscando "${term}" na loja`,'info');
+        // FUNÇÃO: Renderizar produtos
+        function renderProducts(productsToRender) {
+            const grid = document.getElementById('productsGrid');
+
+            if (productsToRender.length === 0) {
+                grid.innerHTML = '<div style="text-align:center;padding:3rem">Nenhum produto encontrado</div>';
+                return;
+            }
+
+            let html = '';
+            for (let i = 0; i < productsToRender.length; i++) {
+                const p = productsToRender[i];
+                const economy = p.oldPrice - p.currentPrice;
+
+                html += '<div class="product">';
+                html += '<div class="product-badge">-' + p.discount + '%</div>';
+                html += '<div class="product-img">';
+                html += '<img src="' + p.image + '" alt="' + p.name + '">';
+                html += '<button class="alert-btn" onclick="openAlertModal(' + "'" + p.name.replace(/'/g, "\'") + "'," + p.currentPrice + ')"><i class="far fa-bell"></i></button>';
+                html += '</div>';
+                html += '<div class="product-info">';
+                html += '<h3 class="product-title">' + p.name + '</h3>';
+                html += '<div class="price-history"><i class="fas fa-arrow-trend-down"></i> Menor preço: <span class="lowest">R$ ' + formatPrice(p.lowestPrice) + '</span></div>';
+                html += '<div class="prices">';
+                html += '<span class="current-price">R$ ' + formatPrice(p.currentPrice) + '</span>';
+                html += '<span class="old-price">R$ ' + formatPrice(p.oldPrice) + '</span>';
+                html += '<span class="economy">Economize R$ ' + formatPrice(economy) + '</span>';
+                html += '</div>';
+                html += '<div class="stores">';
+                for (let j = 0; j < p.stores.length; j++) {
+                    const tagClass = j === 0 ? 'store-tag destaque' : 'store-tag';
+                    html += '<span class="' + tagClass + '">' + p.stores[j] + '</span>';
+                }
+                html += '</div>';
+                html += '<button class="buy-btn" onclick="buyNow(' + "'" + p.searchTerm + "','mercadoLivre')"><i class="fas fa-shopping-bag"></i> Ver no Mercado Livre</button>";
+                html += '<button class="buy-btn secondary" onclick="buyNow(' + "'" + p.searchTerm + "','shopee')"><i class="fas fa-store"></i> Ver na Shopee</button>";
+                html += '</div></div>';
+            }
+
+            grid.innerHTML = html;
         }
 
-        function searchProducts(){
-            const q=document.getElementById('searchInput').value.toLowerCase().trim();
-            if(!q){renderProducts();return}
-            const filtered=products.filter(p=>p.name.toLowerCase().includes(q)||p.category.includes(q)||p.searchTerm.includes(q));
+        // FUNÇÃO: Comprar (link afiliado)
+        function buyNow(searchTerm, store) {
+            const encoded = encodeURIComponent(searchTerm);
+            let url = '';
+
+            if (store === 'mercadoLivre') {
+                url = 'https://lista.mercadolivre.com.br/' + encoded + '#D[A:' + encoded + ']?matt_tool=' + AFFILIATE_IDS.mercadoLivre + '&matt_word=garimpapreco';
+            } else {
+                url = 'https://shopee.com.br/search?keyword=' + encoded + '&utm_source=' + AFFILIATE_IDS.shopee + '&utm_medium=affiliates&utm_campaign=garimpapreco';
+            }
+
+            window.open(url, '_blank');
+            showToast('Redirecionando...', 'Buscando "' + searchTerm + '" na loja', 'info');
+        }
+
+        // FUNÇÃO: Buscar produtos
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            if (!query) {
+                renderProducts(products);
+                return;
+            }
+
+            const filtered = [];
+            for (let i = 0; i < products.length; i++) {
+                const p = products[i];
+                if (p.name.toLowerCase().includes(query) || 
+                    p.category.toLowerCase().includes(query) ||
+                    p.searchTerm.toLowerCase().includes(query)) {
+                    filtered.push(p);
+                }
+            }
+
             renderProducts(filtered);
-            document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});
-            showToast(filtered.length?'Busca realizada!':'Nenhum resultado',filtered.length?`Encontrados ${filtered.length} produtos`:'Tente outros termos',filtered.length?'success':'warning');
-        }
+            document.getElementById('ofertas').scrollIntoView({ behavior: 'smooth' });
 
-        function filterCategory(btn,cat){
-            document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts(cat==='todos'?products:products.filter(p=>p.category===cat));
-            document.getElementById('ofertas').scrollIntoView({behavior:'smooth'});
-        }
-
-        function openAlertModal(name,price){
-            document.getElementById('productName').value=name;
-            document.getElementById('targetPrice').value=(price*0.9).toFixed(2);
-            document.getElementById('alertModal').classList.add('active');
-        }
-
-        function closeModal(){document.getElementById('alertModal').classList.remove('active')}
-
-        async function createAlert(e){
-            e.preventDefault();
-            const product=document.getElementById('productName').value;
-            const email=document.getElementById('alertEmail').value;
-            const price=parseFloat(document.getElementById('targetPrice').value);
-            const btn=document.getElementById('submitAlert');
-
-            btn.disabled=true;
-            btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Salvando...';
-
-            try{
-                const res=await fetch(`${SUPABASE_URL}/rest/v1/price_alerts`,{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},
-                    body:JSON.stringify({email,product_name:product,target_price:price,status:'active'})
-                });
-                if(!res.ok)throw new Error('Erro ao salvar');
-                closeModal();
-                showToast('🎉 Alerta criado!',`Você receberá email quando "${product}" atingir R$ ${formatPrice(price)}`,'success');
-                document.getElementById('alertEmail').value='';
-            }catch(err){
-                showToast('Erro','Não foi possível criar o alerta. Tente novamente.','error');
-            }finally{
-                btn.disabled=false;
-                btn.innerHTML='<i class="fas fa-bell"></i> Criar Alerta';
+            if (filtered.length > 0) {
+                showToast('Busca realizada!', 'Encontrados ' + filtered.length + ' produtos', 'success');
+            } else {
+                showToast('Nenhum resultado', 'Tente outros termos de busca', 'warning');
             }
         }
 
-        function showToast(title,msg,type='success'){
-            const t=document.getElementById('toast');
-            document.getElementById('toastTitle').textContent=title;
-            document.getElementById('toastMessage').textContent=msg;
-            t.querySelector('i').className=`fas ${type==='error'?'fa-exclamation-circle':type==='warning'?'fa-exclamation-triangle':type==='info'?'fa-info-circle':'fa-check-circle'}`;
-            t.classList.add('show');
-            setTimeout(()=>t.classList.remove('show'),4000);
+        // FUNÇÃO: Filtrar por categoria
+        function filterCategory(btn, category) {
+            const chips = document.querySelectorAll('.chip');
+            for (let i = 0; i < chips.length; i++) {
+                chips[i].classList.remove('active');
+            }
+            btn.classList.add('active');
+
+            if (category === 'todos') {
+                renderProducts(products);
+            } else {
+                const filtered = [];
+                for (let i = 0; i < products.length; i++) {
+                    if (products[i].category === category) {
+                        filtered.push(products[i]);
+                    }
+                }
+                renderProducts(filtered);
+            }
+            document.getElementById('ofertas').scrollIntoView({ behavior: 'smooth' });
         }
 
-        document.getElementById('alertModal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()});
-        document.getElementById('searchInput').addEventListener('keypress',e=>{if(e.key==='Enter')searchProducts()});
+        // FUNÇÃO: Abrir modal de alerta
+        function openAlertModal(productName, currentPrice) {
+            document.getElementById('productName').value = productName;
+            document.getElementById('targetPrice').value = (currentPrice * 0.9).toFixed(2);
+            document.getElementById('alertModal').classList.add('active');
+        }
 
-        document.addEventListener('DOMContentLoaded',()=>{
-            renderProducts();
-            setTimeout(()=>showToast('🦔 Bem-vindo!','Seus alertas são salvos em nosso banco de dados','info'),1000);
+        // FUNÇÃO: Fechar modal
+        function closeModal() {
+            document.getElementById('alertModal').classList.remove('active');
+        }
+
+        // FUNÇÃO: Criar alerta
+        async function createAlert(event) {
+            event.preventDefault();
+
+            const product = document.getElementById('productName').value;
+            const email = document.getElementById('alertEmail').value;
+            const price = parseFloat(document.getElementById('targetPrice').value);
+            const btn = document.getElementById('submitAlert');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+
+            try {
+                const response = await fetch(SUPABASE_URL + '/rest/v1/price_alerts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        product_name: product,
+                        target_price: price,
+                        status: 'active'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao salvar');
+                }
+
+                closeModal();
+                showToast('Alerta criado!', 'Você receberá email quando "' + product + '" atingir R$ ' + formatPrice(price), 'success');
+                document.getElementById('alertEmail').value = '';
+            } catch (err) {
+                showToast('Erro', 'Não foi possível criar o alerta', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-bell"></i> Criar Alerta';
+            }
+        }
+
+        // FUNÇÃO: Mostrar toast
+        function showToast(title, message, type) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+
+            const icon = toast.querySelector('i');
+            if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'warning') {
+                icon.className = 'fas fa-exclamation-triangle';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle';
+            } else {
+                icon.className = 'fas fa-check-circle';
+            }
+
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Event listeners
+        document.getElementById('alertModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchProducts();
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts(products);
+            setTimeout(function() {
+                showToast('Bem-vindo!', 'Seus alertas são salvos em nosso banco de dados', 'info');
+            }, 1000);
         });
     </script>
 </body>
